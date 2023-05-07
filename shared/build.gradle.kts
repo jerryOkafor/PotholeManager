@@ -1,3 +1,5 @@
+@file:Suppress("UnusedPrivateMember")
+
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
@@ -11,11 +13,11 @@ kotlin {
             }
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
-        iosSimulatorArm64()
+        iosSimulatorArm64(),
     ).forEach {
         it.binaries.framework {
             baseName = "shared"

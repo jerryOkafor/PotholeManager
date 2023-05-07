@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName")
+
 package com.jerryokafor.potholemanager
 
 class AndroidPlatform : Platform {

@@ -11,7 +11,7 @@ on:
 
 jobs:
   code_quality:
-    name: Run static code analysis
+    name: Code quality
     runs-on: macos-latest
     steps:
       - name: Checkout the code to specific branch
