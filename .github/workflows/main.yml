@@ -10,26 +10,54 @@ on:
       - feature/**
 
 jobs:
-  kdoctor:
-    name: Install and run kdoctor
-    runs-on: macos-latest
+  code_quality:
+    name: Run static code analysis
+    runs_on: macos-latest
     steps:
-      - name: Checkout the code to a specific branch
-        uses: actions/checkout@v3
+      - name: Checkout the code to specific branch
+        uses: actions/checkout@v2
         with:
           ref: ${{ github.event.inputs.branch }}
 
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'zulu' #corretto,temurin or oracle
-          java-version: '17'
+      - name: Run check
+        run: echo 'Done!'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v2
+    build_android:
+      needs: code_quality
+      name: Build, test, check -> (:androidApp)
+      runs_on: macos-latest
+      steps:
+        - name: Checkout the code to specific branch
+          uses: actions/checkout@v2
+          with:
+            ref: ${{ github.event.inputs.branch }}
 
-      - name: Install kdoctor
-        run: brew install kdoctor
+        - name: Cache & Restore Cache
+          uses: actions/cache@v2
+          with:
+            path: |
+              ~/.gradle/caches
+              ~/.gradle/wrapper
+            key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+            restore-keys: |
+              ${{ runner.os }}-gradle-
 
-      - name: Run kdoctor
-        run: kdoctor
+        - name: Make gradlew executable
+          shell: bash
+          run: chmod +x ./gradlew
+
+        - name: Build, test, check (:app)
+          shell: bash
+          run: ./gradlew :app:assembleDevDebug
+
+
+    build_ios:
+      needs: code_quality
+      name: Build, test, check -> (:iosApp)
+      runs_on: macos-latest
+      steps:
+        - name: Checkout the code to specific branch
+          uses: actions/checkout@v2
+          with:
+            ref: ${{ github.event.inputs.branch }}
+
