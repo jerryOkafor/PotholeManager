@@ -54,7 +54,7 @@ jobs:
 
       - name: Build, test, check (:app)
         shell: bash
-        run: ./gradlew :app:assembleDevDebug
+        run: ./gradlew :app:assembleDebug
 
 
   build_ios:
