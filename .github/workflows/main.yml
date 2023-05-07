@@ -12,7 +12,7 @@ on:
 jobs:
   code_quality:
     name: Run static code analysis
-    runs_on: macos-latest
+    runs-on: macos-latest
     steps:
       - name: Checkout the code to specific branch
         uses: actions/checkout@v2
@@ -25,7 +25,7 @@ jobs:
   build_android:
     needs: code_quality
     name: Build, test, check -> (:androidApp)
-    runs_on: macos-latest
+    runs-on: macos-latest
     steps:
       - name: Checkout the code to specific branch
         uses: actions/checkout@v2
@@ -54,7 +54,7 @@ jobs:
     build_ios:
       needs: code_quality
       name: Build, test, check -> (:iosApp)
-      runs_on: macos-latest
+      runs-on: macos-latest
       steps:
         - name: Checkout the code to specific branch
           uses: actions/checkout@v2
