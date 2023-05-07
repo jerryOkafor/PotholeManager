@@ -18,7 +18,18 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: ${{ github.event.inputs.branch }}
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu' #corretto,temurin or oracle
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
       - name: Install kdoctor
         run: brew install kdoctor
+
       - name: Run kdoctor
         run: kdoctor
