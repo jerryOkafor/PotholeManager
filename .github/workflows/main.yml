@@ -15,7 +15,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout the code to specific branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: ${{ github.event.inputs.branch }}
 
@@ -28,9 +28,15 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout the code to specific branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: ${{ github.event.inputs.branch }}
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu' #corretto,temurin or oracle
+          java-version: '17'
 
       - name: Cache & Restore Cache
         uses: actions/cache@v2
@@ -57,7 +63,13 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout the code to specific branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: ${{ github.event.inputs.branch }}
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu' #corretto,temurin or oracle
+          java-version: '17'
 
