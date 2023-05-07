@@ -22,33 +22,33 @@ jobs:
       - name: Run check
         run: echo 'Done!'
 
-    build_android:
-      needs: code_quality
-      name: Build, test, check -> (:androidApp)
-      runs_on: macos-latest
-      steps:
-        - name: Checkout the code to specific branch
-          uses: actions/checkout@v2
-          with:
-            ref: ${{ github.event.inputs.branch }}
+  build_android:
+    needs: code_quality
+    name: Build, test, check -> (:androidApp)
+    runs_on: macos-latest
+    steps:
+      - name: Checkout the code to specific branch
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.branch }}
 
-        - name: Cache & Restore Cache
-          uses: actions/cache@v2
-          with:
-            path: |
-              ~/.gradle/caches
-              ~/.gradle/wrapper
-            key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-            restore-keys: |
-              ${{ runner.os }}-gradle-
+      - name: Cache & Restore Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
-        - name: Make gradlew executable
-          shell: bash
-          run: chmod +x ./gradlew
+      - name: Make gradlew executable
+        shell: bash
+        run: chmod +x ./gradlew
 
-        - name: Build, test, check (:app)
-          shell: bash
-          run: ./gradlew :app:assembleDevDebug
+      - name: Build, test, check (:app)
+        shell: bash
+        run: ./gradlew :app:assembleDevDebug
 
 
     build_ios:
